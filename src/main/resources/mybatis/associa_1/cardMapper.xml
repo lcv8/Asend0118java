@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace属性是名称空间，必须唯一 -->
+<mapper namespace="mybatis01.testmybatis.associa_1.dao.CardDao">
+    <!-- resultMap标签:映射实体与表
+       type属性：表示实体全路径名
+       id属性：为实体与表的映射取一个任意的唯一的名字
+  -->
+    <resultMap id="cardMap" type="mybatis01.testmybatis.associa_1.entity.Card">
+        <!-- id标签:映射主键属性
+           result标签：映射非主键属性
+           property属性:实体的属性名
+           column属性：表的字段名
+      -->
+        <id property="cId" column="cid"/>
+        <result property="cNum" column="cnum"/>
+        <result property="aId" column="aid"/>
+        <association property="address" javaType="mybatis01.testmybatis.associa_1.entity.Address">
+            <id property="aId" column="aaid"/>
+            <result property="addressh" column="addressh"/>
+        </association>
+    </resultMap>
+    <select id="getAllCard" resultMap="cardMap">
+        select c.cid,
+               c.cnum,
+               c.aid ,
+               a.aid aaid,
+               a.addressh addressh
+        from `card` c
+        left join `address` a
+        on c.aid = a.aid
+    </select>
+</mapper>

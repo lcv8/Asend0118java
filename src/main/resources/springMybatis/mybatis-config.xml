@@ -27,10 +27,6 @@
 
 <!--    配置文件和映射文件关联起来-->
     <mappers>
-        <mapper resource="mybatis/mapper/studentMapper.xml"/>
-        <mapper resource="mybatis/associa_1/cardMapper.xml"/>
-        <mapper resource="mybatis/associa_1/addressMapper.xml"/>
-        <mapper resource="mybatis/associa_1/deptMapper.xml"/>
-        <mapper resource="mybatis/associa_1/empMapper.xml"/>
+
     </mappers>
 </configuration>

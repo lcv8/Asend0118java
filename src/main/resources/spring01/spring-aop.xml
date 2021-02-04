@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <bean class="spring.aop01.UserServiceImpl" id="userService"/>
+    <!--  管理dao  -->
+    <bean class="spring.aop01.goingto.dao.DeptDaoImpl" id="deptDao"/>
+    <!--  管理service  -->
+    <bean class="spring.aop01.goingto.service.DeptServiceImpl" id="deptService">
+        <property name="deptDao" ref="deptDao"/>
+    </bean>
+<!--    通知类-->
+    <bean class="spring.aop01.goingto.advices.MethosTimeAdvice" id="methosTimeAdvice"></bean>
+    <aop:config>
+<!--        切入点-->
+        <aop:pointcut id="service" expression="execution(* spring.aop01.goingto.service.*ServiceImpl.*(..))"/>
+<!--        组装切面-->
+        <aop:advisor advice-ref="methosTimeAdvice" pointcut-ref="service"/>
+    </aop:config>
+</beans>

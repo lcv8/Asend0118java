@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <bean class="spring.aop01.UserServiceImpl" id="userService"/>
+    <bean class="spring.ioc01.CalendarFactoryBean" id="calendar"/>
+    <bean class="spring.ioc01.ConnectionFactoryBean" id="connection"/>
+
+
+    <!--注册通知-->
+    <bean class="spring.aop01.MyBeforeAdvice" id="myBeforeAdvice"/>
+        <!--组装切面-->
+    <aop:config>
+        <!--  配置切入点 id:切入点工厂唯一标识 expression：只当项目中的那些组件那些方法-->
+        <aop:pointcut id="service" expression="execution(* spring.aop01.UserServiceImpl.*(..))"/>
+        <!--advice :通知  pointcut：切入点-->
+        <aop:advisor advice-ref="myBeforeAdvice" pointcut-ref="service"/>
+    </aop:config>
+</beans>

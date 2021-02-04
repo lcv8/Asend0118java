@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace属性是名称空间，必须唯一 -->
+<mapper namespace="mybatis01.testmybatis.associa_1.dao.DeptDao">
+    <!-- resultMap标签:映射实体与表
+       type属性：表示实体全路径名
+       id属性：为实体与表的映射取一个任意的唯一的名字
+  -->
+    <resultMap id="deptMap" type="mybatis01.testmybatis.associa_1.entity.Dept">
+        <!-- id标签:映射主键属性
+           result标签：映射非主键属性
+           property属性:实体的属性名
+           column属性：表的字段名
+      -->
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!--封装员工信息collection用来处理一对多关联关系标签
+            property :封装关系属性名
+            javaType:关系属性类型
+            ofType :用来书写关系属性类型中泛型的类型-->
+
+        <collection property="emps" javaType="list" ofType="mybatis01.testmybatis.associa_1.entity.Emp">
+            <id property="id" column="eid"/>
+            <result property="name" column="ename"/>
+            <result property="age" column="age"/>
+            <result property="bir" column="bir"/>
+            <result property="deptId" column="deptid"/>
+        </collection>
+    </resultMap>
+    <select id="getAllDept" resultMap="deptMap">
+        select d.id ,
+               d.name,
+               e.id eid,
+               e.name ename,
+               e.age,
+               e.bir,
+               e.deptid
+        from `dept` d
+        left join `emp` e
+        on d.id = e.deptid
+    </select>
+</mapper>
